@@ -4,7 +4,8 @@
   "description": "",
   "main": "App.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start":"parcel index.html"
   },
   "author": "charan",
   "license": "ISC",
