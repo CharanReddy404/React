@@ -5,7 +5,7 @@
   "main": "App.js",
   "scripts": {
     "test": "jest",
-    "start":"parcel index.html"
+    "start": "parcel index.html"
   },
   "author": "charan",
   "license": "ISC",
@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-loading-skeleton": "^3.1.1"
   }
 }

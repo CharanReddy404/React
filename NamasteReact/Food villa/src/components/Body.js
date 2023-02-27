@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import RestaurantCard from './RestaurantCard';
 import { RestaurantList } from '../constants';
-import Shimmer from './Shimmer';
+import RestaurantCardSkeleton from './Skeletons/RestaurantCardSkeleton';
 
 const filterData = (searchTxt, restaurants) => {
   console.log(searchTxt);
@@ -9,6 +9,14 @@ const filterData = (searchTxt, restaurants) => {
     restaurant?.data?.name?.toLowerCase()?.includes(searchTxt.toLowerCase())
   );
   return filteredData;
+};
+
+const repeatSkeleton = () => {
+  let cart = [];
+  for (let i = 0; i < 15; i++) {
+    cart.push(<RestaurantCardSkeleton key={i} />);
+  }
+  return cart;
 };
 
 const Body = () => {
@@ -32,9 +40,7 @@ const Body = () => {
 
   if (!allRestaurants) return null;
 
-  return allRestaurants?.length === 0 ? (
-    <Shimmer />
-  ) : (
+  return (
     <>
       <div className='search-container'>
         <input
@@ -54,15 +60,19 @@ const Body = () => {
           Search
         </button>
       </div>
-      <div className='restraunt-list'>
-        {filteredRestaurants?.length === 0 ? (
-          <h1>No Restaurants Matchs Your Filter</h1>
-        ) : (
-          filteredRestaurants.map((restaurant, i) => {
-            return <RestaurantCard {...restaurant.data} key={i} />;
-          })
-        )}
-      </div>
+      {allRestaurants?.length === 0 ? (
+        <div className='restraunt-list'>{repeatSkeleton()}</div>
+      ) : (
+        <div className='restraunt-list'>
+          {filteredRestaurants?.length === 0 ? (
+            <h1>No Restaurants Matchs Your Filter</h1>
+          ) : (
+            filteredRestaurants.map((restaurant, i) => {
+              return <RestaurantCard {...restaurant.data} key={i} />;
+            })
+          )}
+        </div>
+      )}
     </>
   );
 };
