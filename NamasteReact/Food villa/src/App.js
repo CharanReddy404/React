@@ -1,29 +1,51 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
+
 import Header from './components/Header';
 import Body from './components/Body';
+import Contact from './components/Contact';
 import Footer from './components/Fotter';
-
-// const heading = React.createElement('h1', { id: 'title' }, 'Heading 1');
-// const heading2 = React.createElement('h2', { id: 'title' }, 'Heading 2');
-
-// const container = React.createElement('div', { id: 'container' }, [
-//   heading,
-//   heading2,
-// ]);
-
-// console.log(container);
+import About from './components/About';
+import RestaurantMenu from './components/RestaurantMenu';
+import Error from './Error';
 
 const AppLayout = () => {
   return (
     <>
       <Header />
-      <Body />
+      <Outlet />
       <Footer />
     </>
   );
 };
 
+const appRouter = createBrowserRouter([
+  {
+    path: '/',
+    element: <AppLayout />,
+    errorElement: <Error />,
+    children: [
+      {
+        path: '/',
+        element: <Body />,
+      },
+      {
+        path: '/about',
+        element: <About />,
+      },
+      {
+        path: '/contact',
+        element: <Contact />,
+      },
+      {
+        path: '/restaurant/:menuId',
+        element: <RestaurantMenu />,
+      },
+    ],
+  },
+]);
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-root.render(<AppLayout />);
+root.render(<RouterProvider router={appRouter} />);

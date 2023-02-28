@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import RestaurantCard from './RestaurantCard';
 import { RestaurantList } from '../constants';
 import RestaurantCardSkeleton from './Skeletons/RestaurantCardSkeleton';
+import { Link } from 'react-router-dom';
 
 const filterData = (searchTxt, restaurants) => {
   console.log(searchTxt);
@@ -9,14 +10,6 @@ const filterData = (searchTxt, restaurants) => {
     restaurant?.data?.name?.toLowerCase()?.includes(searchTxt.toLowerCase())
   );
   return filteredData;
-};
-
-const repeatSkeleton = () => {
-  let cart = [];
-  for (let i = 0; i < 15; i++) {
-    cart.push(<RestaurantCardSkeleton key={i} />);
-  }
-  return cart;
 };
 
 const Body = () => {
@@ -33,7 +26,6 @@ const Body = () => {
       'https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9715987&lng=77.5945627&page_type=DESKTOP_WEB_LISTING'
     );
     const json = await data.json();
-    console.log(json);
     setAllRestaurants(json?.data?.cards[2]?.data?.data?.cards);
     setFilteredRestaurants(json?.data?.cards[2]?.data?.data?.cards);
   }
@@ -61,14 +53,27 @@ const Body = () => {
         </button>
       </div>
       {allRestaurants?.length === 0 ? (
-        <div className='restraunt-list'>{repeatSkeleton()}</div>
+        <div className='restraunt-list'>
+          {Array(15)
+            .fill('')
+            .map((e, i) => (
+              <RestaurantCardSkeleton key={i} />
+            ))}
+        </div>
       ) : (
         <div className='restraunt-list'>
           {filteredRestaurants?.length === 0 ? (
             <h1>No Restaurants Matchs Your Filter</h1>
           ) : (
             filteredRestaurants.map((restaurant, i) => {
-              return <RestaurantCard {...restaurant.data} key={i} />;
+              return (
+                <Link
+                  to={`/restaurant/${restaurant.data.id}`}
+                  key={restaurant.data.id}
+                >
+                  <RestaurantCard {...restaurant.data} />
+                </Link>
+              );
             })
           )}
         </div>
