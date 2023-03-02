@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 const Title = () => (
   <a href='/'>
     <img
-      className='logo'
+      className='h-28 p-2'
       alt='img'
       src='https://lh5.googleusercontent.com/p/AF1QipOhHeCaQ6Xb6RVf3R_ZBTbDK4FIug_203rKsHLT'
     />
@@ -19,26 +19,29 @@ const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
-    <div className='header'>
+    <div className='flex justify-between bg-orange-50 shadow-lg'>
       <Title />
-      <div className='nav-items'>
-        <ul>
-          <li>
+      <div className='flex items-center'>
+        <ul className='flex'>
+          <li className='px-2'>
             <Link to='/'>Home</Link>
           </li>
-          <li>
+          <li className='px-2'>
             <Link to='/about'>About</Link>
           </li>
-          <li>
+          <li className='px-2'>
             <Link to='/contact'>Contact</Link>
           </li>
-          <li>
+          <li className='px-2'>
+            <Link to='/instamart'>InstaMart</Link>
+          </li>
+          <li className='px-2'>
             <Link>Cart</Link>
           </li>
         </ul>
       </div>
       {isLoggedIn ? (
-        <button onClick={() => setIsLoggedIn(false)}>Logout</button>
+        <button onClick={(e) => setIsLoggedIn(false)}>Logout</button>
       ) : (
         <button onClick={() => setIsLoggedIn(true)}>Login</button>
       )}

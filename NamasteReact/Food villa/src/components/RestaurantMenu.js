@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import useRestaurant from '../utils/useRestaurant';
 
 import { IMG_CDN_URL } from '../constants';
 import RestaurantCardSkeleton from './Skeletons/RestaurantCardSkeleton';
@@ -7,20 +7,7 @@ import RestaurantCardSkeleton from './Skeletons/RestaurantCardSkeleton';
 const RestaurantMenu = () => {
   const { menuId } = useParams();
 
-  const [restaurant, setRestaurant] = useState(null);
-
-  useEffect(() => {
-    getRestaurantInfo();
-  }, []);
-
-  async function getRestaurantInfo() {
-    const data = await fetch(
-      `https://www.swiggy.com/dapi/menu/v4/full?lat=12.9715987&lng=77.5945627&menuId=${menuId}`
-    );
-    const json = await data.json();
-    console.log(json);
-    setRestaurant(json.data);
-  }
+  const restaurant = useRestaurant(menuId);
 
   return !restaurant ? (
     <RestaurantCardSkeleton />
@@ -37,11 +24,16 @@ const RestaurantMenu = () => {
       </div>
       <div>
         <h1> Menu</h1>
-        <ul>
+
+        <div className='restraunt-list'>
           {Object.values(restaurant?.menu?.items).map((item) => (
-            <li key={item.id}>{item.name}</li>
+            <div className='mini-card' key={item.id}>
+              <img src={IMG_CDN_URL + item.cloudinaryImageId} />
+              <h3>{item.name}</h3>
+              <p>{item.category}</p>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
     </div>
   );
