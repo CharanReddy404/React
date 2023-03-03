@@ -12,22 +12,34 @@ const RestaurantMenu = () => {
   return !restaurant ? (
     <RestaurantCardSkeleton />
   ) : (
-    <div className='menu'>
-      <div className='card'>
-        <img src={IMG_CDN_URL + restaurant.cloudinaryImageId} />
-        <h1>{restaurant.name}</h1>
-        <h3>
-          {restaurant.area}, {restaurant.city}
-        </h3>
-        <h3>{restaurant.costForTwoMsg}</h3>
-        <h3>{restaurant.avgRating} starts</h3>
+    <div className='px-10 bg-slate-800 pt-24'>
+      {console.log(restaurant)}
+      <div className='px-8 flex flex-wrap'>
+        <img
+          className='rounded-xl'
+          src={IMG_CDN_URL + restaurant.cloudinaryImageId}
+        />
+        <div className='px-8 text-white'>
+          <h1 className='text-3xl font-bold mb-3'>{restaurant.name}</h1>
+          <h3 className='text-xl mb-3'>{restaurant.cuisines.join(',')}</h3>
+          <h3 className='text-xl mb-3'>
+            {restaurant.area}, {restaurant.city}
+          </h3>
+          <span className='bg-white text-black rounded-md px-2 font-semibold'>
+            {restaurant.costForTwoMsg}
+          </span>
+          <h3 className='mt-3 mb-3'>
+            {restaurant.aggregatedDiscountInfo.header}
+          </h3>
+          <h3 className='mb-3'>{restaurant.avgRating} stars </h3>
+        </div>
       </div>
-      <div>
-        <h1> Menu</h1>
+      <div className='px-10 mt-10'>
+        <h1 className='text-3xl text-white font-bold mb-3'>Menu</h1>
 
-        <div className='restraunt-list'>
+        <div className='flex flex-wrap justify-between'>
           {Object.values(restaurant?.menu?.items).map((item) => (
-            <div className='mini-card' key={item.id}>
+            <div className='w-64 my-3 bg-white rounded-lg shadow' key={item.id}>
               <img src={IMG_CDN_URL + item.cloudinaryImageId} />
               <h3>{item.name}</h3>
               <p>{item.category}</p>

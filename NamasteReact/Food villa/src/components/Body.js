@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import RestaurantCard from './RestaurantCard';
 import RestaurantCardSkeleton from './Skeletons/RestaurantCardSkeleton';
-import { Link } from 'react-router-dom';
 import { filterData } from '../utils/helper';
 import { FETCH_RESTAURANTS_URL } from '../constants';
 import useOnline from '../utils/useOnline';
@@ -30,8 +29,8 @@ const Body = () => {
   if (!allRestaurants) return null;
 
   return (
-    <>
-      <div className='flex justify-center p-2 my-2 bg-orange-100'>
+    <div className='px-10 bg-slate-800 pt-16'>
+      <div className='flex justify-center pt-4 bg-slate-800'>
         <input
           type='text'
           className='p-2 m-2 w-96 focus:bg-blue-100 rounded-full'
@@ -40,7 +39,7 @@ const Body = () => {
           onChange={(e) => setSearchTxt(e.target.value)}
         />
         <button
-          className='p-2 m-2 w-24 text-white bg-blue-900 rounded-full hover:bg-blue-500'
+          className='p-2 m-2 w-24 text-white bg-green-400 rounded-full hover:bg-green-500'
           onClick={() => {
             const data = filterData(searchTxt, allRestaurants);
             setFilteredRestaurants(data);
@@ -58,24 +57,19 @@ const Body = () => {
             ))}
         </div>
       ) : (
-        <div className='flex flex-wrap justify-between'>
+        <div className='flex flex-wrap justify-around'>
           {filteredRestaurants?.length === 0 ? (
             <h1>No Restaurants Matchs Your Filter</h1>
           ) : (
             filteredRestaurants.map((restaurant, i) => {
               return (
-                <Link
-                  to={`/restaurant/${restaurant.data.id}`}
-                  key={restaurant.data.id}
-                >
-                  <RestaurantCard {...restaurant.data} />
-                </Link>
+                <RestaurantCard {...restaurant.data} key={restaurant.data.id} />
               );
             })
           )}
         </div>
       )}
-    </>
+    </div>
   );
 };
 
