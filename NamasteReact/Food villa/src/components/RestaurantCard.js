@@ -1,5 +1,7 @@
-import { IMG_CDN_URL } from '../constants';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { IMG_CDN_URL } from '../constants';
+import UserContext from '../utils/UserContext';
 
 const RestaurantCard = ({
   id,
@@ -9,6 +11,7 @@ const RestaurantCard = ({
   avgRating,
   lastMileTravelString,
 }) => {
+  const { user } = useContext(UserContext);
   return (
     <div className='w-64 my-3 bg-white rounded-lg shadow'>
       <Link to={`/restaurant/${id}`}>
@@ -24,6 +27,8 @@ const RestaurantCard = ({
           <span className='bg-blue-100 text-blue-800 p-2  font-semibold text-xs rounded-md'>
             {avgRating}
           </span>
+          <h6 className='text-sm font-semibold'>{user.name}</h6>
+          <h6 className='text-sm font-semibold'>{user.email}</h6>
         </div>
       </Link>
     </div>

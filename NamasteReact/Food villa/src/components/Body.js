@@ -1,14 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import RestaurantCard from './RestaurantCard';
 import RestaurantCardSkeleton from './Skeletons/RestaurantCardSkeleton';
 import { filterData } from '../utils/helper';
 import { FETCH_RESTAURANTS_URL } from '../constants';
 import useOnline from '../utils/useOnline';
+import UserContext from '../utils/UserContext';
 
 const Body = () => {
   const [allRestaurants, setAllRestaurants] = useState([]);
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
   const [searchTxt, setSearchTxt] = useState('');
+
+  const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
     getRestaurants();
@@ -47,6 +50,32 @@ const Body = () => {
         >
           Search
         </button>
+      </div>
+      <div className='flex flex-wrap justify-center'>
+        <div className='flex justify-center'>
+          <label className='text-sm font-semibold p-1 m-3 h-8 text-white bg-green-500 rounded-full'>
+            UserName:
+          </label>
+          <input
+            className='p-1 m-3 h-8 text-center w-56 focus:bg-blue-100 rounded-full'
+            value={user.name}
+            onChange={(e) => {
+              setUser({ ...user, name: e.target.value });
+            }}
+          />
+        </div>
+        <div className='flex justify-center'>
+          <label className='text-sm font-semibold p-1 m-3 h-8 text-white bg-green-500 rounded-full'>
+            UserEmail:
+          </label>
+          <input
+            className='p-1 m-3 h-8 text-center w-56 focus:bg-blue-100 rounded-full'
+            value={user.email}
+            onChange={(e) => {
+              setUser({ ...user, email: e.target.value });
+            }}
+          />
+        </div>
       </div>
       {allRestaurants?.length === 0 ? (
         <div className='flex flex-wrap justify-between'>

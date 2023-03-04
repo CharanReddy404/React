@@ -1,25 +1,32 @@
 import { useParams } from 'react-router-dom';
-import useRestaurant from '../utils/useRestaurant';
+import { useDispatch } from 'react-redux';
 
-import { IMG_CDN_URL } from '../constants';
+import useRestaurant from '../utils/useRestaurant';
 import RestaurantCardSkeleton from './Skeletons/RestaurantCardSkeleton';
+import { IMG_CDN_URL } from '../constants';
+import { addItem } from '../utils/cartSlice';
 
 const RestaurantMenu = () => {
   const { menuId } = useParams();
 
   const restaurant = useRestaurant(menuId);
 
+  const dispatch = useDispatch();
+
+  const handleAddItem = (name) => {
+    dispatch(addItem(name));
+  };
+
   return !restaurant ? (
     <RestaurantCardSkeleton />
   ) : (
     <div className='px-10 bg-slate-800 pt-24'>
-      {console.log(restaurant)}
       <div className='px-8 flex flex-wrap'>
         <img
           className='rounded-xl'
           src={IMG_CDN_URL + restaurant.cloudinaryImageId}
         />
-        <div className='px-8 text-white'>
+        <div className='lg:px-8 text-white'>
           <h1 className='text-3xl font-bold mb-3'>{restaurant.name}</h1>
           <h3 className='text-xl mb-3'>{restaurant.cuisines.join(',')}</h3>
           <h3 className='text-xl mb-3'>
@@ -43,6 +50,12 @@ const RestaurantMenu = () => {
               <img src={IMG_CDN_URL + item.cloudinaryImageId} />
               <h3>{item.name}</h3>
               <p>{item.category}</p>
+              <button
+                className='m-2 bg-green-700 text-white px-2 rounded-lg hover:text-red-900'
+                onClick={() => handleAddItem(item)}
+              >
+                Add To Cart
+              </button>
             </div>
           ))}
         </div>

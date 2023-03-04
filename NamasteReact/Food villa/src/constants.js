@@ -6,3 +6,4 @@ export const FETCH_RESTAURANTS_URL =
 
 export const FETCH_MENU_URL =
   'https://www.swiggy.com/dapi/menu/v4/full?lat=12.9715987&lng=77.5945627&menuId=';
+// 'https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=12.9715987&lng=77.5945627&restaurantId=';

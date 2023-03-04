@@ -1,8 +1,11 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 const Header = () => {
   const [navbar, setNavbar] = useState(false);
+
+  const cartItems = useSelector((store) => store.cart.items);
 
   return (
     <nav className='w-full bg-slate-800 shadow fixed'>
@@ -72,7 +75,10 @@ const Header = () => {
                 <Link to='/instamart'>InstaMart</Link>
               </li>
               <li className='text-white hover:text-indigo-200'>
-                <Link to='#'>Cart</Link>
+                <Link to='/cart'>
+                  Cart (
+                  <span className='text-yellow-400'>{cartItems.length}</span>)
+                </Link>
               </li>
             </ul>
 
@@ -81,14 +87,14 @@ const Header = () => {
                 to=''
                 className='inline-block w-full px-4 py-2 text-center text-white bg-gray-600 rounded-md shadow hover:bg-gray-800'
               >
-                Sign in
+                Log in
               </Link>
-              <Link
+              {/* <Link
                 to=''
                 className='inline-block w-full px-4 py-2 text-center text-gray-800 bg-white rounded-md shadow hover:bg-gray-100'
               >
                 Sign up
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>
@@ -97,14 +103,14 @@ const Header = () => {
             to=''
             className='px-4 py-2 text-white bg-gray-600 rounded-md shadow hover:bg-gray-800'
           >
-            Sign in
+            Log in
           </Link>
-          <Link
+          {/* <Link
             to=''
             className='px-4 py-2 text-gray-800 bg-white rounded-md shadow hover:bg-gray-100'
           >
             Sign up
-          </Link>
+          </Link> */}
         </div>
       </div>
     </nav>
