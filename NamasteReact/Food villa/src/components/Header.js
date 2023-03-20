@@ -13,7 +13,10 @@ const Header = () => {
         <div>
           <div className='flex items-center justify-between py-3 md:py-5 md:block'>
             <a href='/'>
-              <h2 className='text-2xl font-bold text-green-400 font-[cursive]'>
+              <h2
+                data-testid='logo'
+                className='text-2xl font-bold text-green-400 font-[cursive]'
+              >
                 ReactEats
               </h2>
             </a>
@@ -77,7 +80,10 @@ const Header = () => {
               <li className='text-white hover:text-indigo-200'>
                 <Link to='/cart'>
                   Cart (
-                  <span className='text-yellow-400'>{cartItems.length}</span>)
+                  <span data-testid='cart' className='text-yellow-400'>
+                    {cartItems.length}
+                  </span>
+                  )
                 </Link>
               </li>
             </ul>
